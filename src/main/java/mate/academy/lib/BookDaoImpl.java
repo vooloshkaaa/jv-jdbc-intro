@@ -33,7 +33,7 @@ public class BookDaoImpl implements BookDao {
             return book;
 
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't insert book", e);
+            throw new DataProcessingException("Can't insert book" + book, e);
         }
     }
 
@@ -53,7 +53,7 @@ public class BookDaoImpl implements BookDao {
             return Optional.empty();
 
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't find book by id", e);
+            throw new DataProcessingException("Can't find book by id" + id, e);
         }
     }
 
@@ -91,7 +91,7 @@ public class BookDaoImpl implements BookDao {
             return book;
 
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't update book", e);
+            throw new DataProcessingException("Can't update book " + book, e);
         }
     }
 
@@ -106,12 +106,12 @@ public class BookDaoImpl implements BookDao {
             return statement.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't delete book", e);
+            throw new DataProcessingException("Can't delete book by id " + id, e);
         }
     }
 
     private Book parseBook(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("id");
+        Long id = resultSet.getObject("id", Long.class);
         String title = resultSet.getString("title");
         java.math.BigDecimal price = resultSet.getBigDecimal("price");
         return new Book(id, title, price);
