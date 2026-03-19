@@ -28,12 +28,12 @@ public class BookDaoImpl implements BookDao {
 
             ResultSet keys = statement.getGeneratedKeys();
             if (keys.next()) {
-                book.setId(keys.getLong(1));
+                book.setId(keys.getObject(1, Long.class));
             }
             return book;
 
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't insert book" + book, e);
+            throw new DataProcessingException("Can't insert book " + book, e);
         }
     }
 
@@ -53,7 +53,7 @@ public class BookDaoImpl implements BookDao {
             return Optional.empty();
 
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't find book by id" + id, e);
+            throw new DataProcessingException("Can't find book by id " + id, e);
         }
     }
 
@@ -72,7 +72,7 @@ public class BookDaoImpl implements BookDao {
             return books;
 
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't get all books", e);
+            throw new DataProcessingException("Can't get all books ", e);
         }
     }
 
